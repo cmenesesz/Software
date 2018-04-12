@@ -10,13 +10,11 @@ class Control(object):
                 self.publisher = rospy.Publisher("/duckiebot/wheels_driver_node/car_cmd",Twist2DStamped,queue_size=10)
 		self.subscriber = rospy.Subscriber("/duckiebot/joy/",Joy,self.controlar)
 		self.twist = Twist2DStamped()
-		
-
 
 	def controlar(self,msg):
-		x=msg.axes[1]*2
-		y=msg.axes[0]*10
-		z=msg.buttons[0]
+		x=msg.axes[1]           #lineal
+		y=msg.axes[0]*2	#angular
+		z=msg.buttons[0]        #freno
 		if z==1:
 			self.twist.v= 0.0
 			self.twist.omega = 0.0
