@@ -22,9 +22,9 @@ class detectar(object):
 		image_out1=cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
 		mask=cv2.inRange(image_out1,np.array([15,150,150]),np.array([50,255,255]))
 		image_out2=cv2.bitwise_and(image_out1,image_out1,mask=mask)
-		kernel=np.ones((5,5),np.uint8)
-		image_out3=cv2.dilate(image_out2,kernel,iterations=1)
-		image_out4=cv2.erode(image_out3,kernel,iterations=1)
+		kernel=np.ones((7,7),np.uint8)
+		image_out3=cv2.erode(image_out2,kernel,iterations=1)
+		image_out4=cv2.dilate(image_out3,kernel,iterations=1)
 		(_,contours,hierarchy)=cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 		image_out5=image.copy()		
 		for contornos in contours:
