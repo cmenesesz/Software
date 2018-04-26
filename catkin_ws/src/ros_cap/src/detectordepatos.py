@@ -20,7 +20,7 @@ class detectar(object):
 		bridge=CvBridge()
 		image=bridge.imgmsg_to_cv2(msg,"bgr8")
 		image_out1=cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
-		mask=cv2.inRange(image_out1,np.array([15,150,150]),np.array([50,255,255]))
+		mask=cv2.inRange(image_out1,np.array([20,150,115]),np.array([35,255,255]))
 		image_out2=cv2.bitwise_and(image_out1,image_out1,mask=mask)
 		kernel=np.ones((7,7),np.uint8)
 		image_out3=cv2.erode(image_out2,kernel,iterations=1)
@@ -29,7 +29,7 @@ class detectar(object):
 		image_out5=image.copy()		
 		for contornos in contours:
 			area=cv2.contourArea(contornos)
-			if area>350:
+			if area>300:
 				x,y,w,h=cv2.boundingRect(contornos)
 				image_out5=cv2.rectangle(image,(x,y),(x+w,y+h),([0,255,0]),2)
 		Msg=bridge.cv2_to_imgmsg(image_out5,"bgr8")
@@ -48,6 +48,3 @@ def main():
 
 if __name__ =='__main__':
 	main()
-
-
-#np.array([50,0,50]),np.array([70,100,100]))
