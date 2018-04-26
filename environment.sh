@@ -11,12 +11,14 @@ export PYTHONPATH=$HOME/duckietown/catkin_ws/src:$PYTHONPATH
 echo
 
 echo "Setup ROS_HOSTNAME."
-export ROS_HOSTNAME=$HOSTNAME.local
+export ROS_HOSTNAME=$HOSTNAME
 export DUCKIETOWN_ROOT=$HOME/duckietown
 echo
 
 echo "Setup ROS_MASTER"
-export ROS_MASTER_URI=http://duckiebot.local:11311/
+export ROS_MASTER_URI=http://127.0.1.1:11311/
+
+export ROS_IP=localhost
 
 echo "Building machines file..."
 make -C  $DUCKIETOWN_ROOT
