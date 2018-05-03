@@ -12,7 +12,7 @@ class detectar(object):
 	def __init__(self):
 		super(detectar, self).__init__()
                 self.publisher = rospy.Publisher("/detectarpatos",Image,queue_size=10)
-		self.publisher2 = rospy.Publisher("/posicionpato",Image,queue_size=10)
+		self.publisher2 = rospy.Publisher("/posicionpato",Point,queue_size=10)
 		self.subscriber = rospy.Subscriber("/duckiebot/camera_node/image/rect",Image,self.detectarpatos)
 		self.twist = Image()
 		self.point= Point()
