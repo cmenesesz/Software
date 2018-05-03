@@ -46,7 +46,7 @@ class detectar(object):
 				cx=157.44613288131654
 				cy=118.77898324341594
 				equis=(x-cx)*(profundidad/fx)
-				igriegra=(y-cy)*(profundidad/fy)
+				igriega=(y-cy)*(profundidad/fy)
 				self.point.x=equis
 				self.point.y=igriega
 				self.point.z=profundidad
