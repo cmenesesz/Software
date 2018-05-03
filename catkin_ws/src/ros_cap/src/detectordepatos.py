@@ -2,6 +2,7 @@
 
 import rospy #importar ros para python
 from cv_bridge import CvBridge
+from geometry_msgs.msg import Point
 from sensor_msgs.msg import Image
 import cv2
 import numpy as np
@@ -10,10 +11,17 @@ import numpy as np
 class detectar(object):
 	def __init__(self):
 		super(detectar, self).__init__()
-                self.publisher = rospy.Publisher("/dectecciondeimagenespato",Image,queue_size=10)
-		self.subscriber = rospy.Subscriber("/usb_cam/image_raw/",Image,self.detectarpatos)
+                self.publisher = rospy.Publisher("/detectarpatos",Image,queue_size=10)
+		self.publisher2 = rospy.Publisher("/posicionpato",Image,queue_size=10)
+		self.subscriber = rospy.Subscriber("/duckiebot/camera_node/image/rect",Image,self.detectarpatos)
 		self.twist = Image()
+		self.point= Point()
 		
+
+	def distancia(self,d):
+		fx=168.73228481434404  #distancia focal  
+    		Px=3.8                 #ancho pato
+		return (fx*Px)/d
 
 
 	def detectarpatos(self,msg):
@@ -32,6 +40,17 @@ class detectar(object):
 			if area>300:
 				x,y,w,h=cv2.boundingRect(contornos)
 				image_out5=cv2.rectangle(image,(x,y),(x+w,y+h),([0,255,0]),2)
+				profundidad=self.distancia(w)
+				fx=168.73228481434404
+				fy=171.20265520987937
+				cx=157.44613288131654
+				cy=118.77898324341594
+				equis=(x-cx)*(profundidad/fx)
+				igriegra=(y-cy)*(profundidad/fy)
+				self.point.x=equis
+				self.point.y=igriega
+				self.point.z=profundidad
+				self.publisher2.publish(self.point)
 		Msg=bridge.cv2_to_imgmsg(image_out5,"bgr8")
 		self.publisher.publish(Msg)
 
